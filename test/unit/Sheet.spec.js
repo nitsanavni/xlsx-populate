@@ -20,8 +20,8 @@ describe("Sheet", () => {
         Cell.prototype.address = jasmine.createSpy("Cell.address").and.returnValue("ADDRESS");
 
         Relationships = jasmine.createSpy("Relationships");
-        Relationships.prototype.findById = jasmine.createSpy("Relationships.findById").and.callFake(id => ({attributes: {Target: `TARGET:${id}`}}));
-        Relationships.prototype.add = jasmine.createSpy("Relationships.add").and.returnValue({attributes: {Id: "ID"}});
+        Relationships.prototype.findById = jasmine.createSpy("Relationships.findById").and.callFake(id => ({ attributes: { Target: `TARGET:${id}` } }));
+        Relationships.prototype.add = jasmine.createSpy("Relationships.add").and.returnValue({ attributes: { Id: "ID" } });
 
         Sheet = proxyquire("../../lib/Sheet", {
             './Range': Range,
@@ -48,9 +48,9 @@ describe("Sheet", () => {
                 xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
             },
             children: [
-                {name: 'sheetFormatPr', attributes: {}, children: []},
-                {name: 'sheetData', attributes: {}, children: []},
-                {name: 'pageMargins', attributes: {}, children: []}
+                { name: 'sheetFormatPr', attributes: {}, children: [] },
+                { name: 'sheetData', attributes: {}, children: [] },
+                { name: 'pageMargins', attributes: {}, children: [] }
             ]
         };
 
@@ -157,7 +157,7 @@ describe("Sheet", () => {
         let cell;
         beforeEach(() => {
             cell = jasmine.createSpy("cell").and.returnValue("CELL");
-            spyOn(sheet, "row").and.returnValue({cell});
+            spyOn(sheet, "row").and.returnValue({ cell });
         });
 
         it("should create a cell from an address", () => {
@@ -482,7 +482,7 @@ describe("Sheet", () => {
                 children: []
             }]);
 
-            expect(sheet.tabColor({rgb: "ff0000", tint: -0.5})).toBe(sheet);
+            expect(sheet.tabColor({ rgb: "ff0000", tint: -0.5 })).toBe(sheet);
             expect(sheet._sheetPrNode.children).toEqualJson([{
                 name: "tabColor",
                 attributes: {
@@ -501,7 +501,7 @@ describe("Sheet", () => {
         let sheetViewNode;
 
         beforeEach(() => {
-            sheetViewNode = {attributes: {}};
+            sheetViewNode = { attributes: {} };
             spyOn(sheet, "_getOrCreateSheetViewNode").and.returnValue(sheetViewNode);
         });
 
@@ -624,8 +624,8 @@ describe("Sheet", () => {
     describe("hyperlink", () => {
         it("should return the hyperlink", () => {
             sheet._hyperlinks = {
-                ADDRESS1: {attributes: {'r:id': "ID1"}},
-                ADDRESS2: {attributes: {'r:id': "ID2"}}
+                ADDRESS1: { attributes: { 'r:id': "ID1" } },
+                ADDRESS2: { attributes: { 'r:id': "ID2" } }
             };
 
             expect(sheet.hyperlink("ADDRESS1")).toBe("TARGET:ID1");
@@ -746,41 +746,41 @@ describe("Sheet", () => {
                 null,
                 {
                     name: "col",
-                    attributes: {min: 1, max: 2, foo: true}
+                    attributes: { min: 1, max: 2, foo: true }
                 },
                 {
                     name: "col",
-                    attributes: {min: 1, max: 2, foo: true}
+                    attributes: { min: 1, max: 2, foo: true }
                 },
                 {
                     name: "col",
-                    attributes: {min: 3, max: 3, foo: true}
+                    attributes: { min: 3, max: 3, foo: true }
                 },
                 {
                     name: "col",
-                    attributes: {min: 4, max: 4}
+                    attributes: { min: 4, max: 4 }
                 }
             ];
 
             expect(sheet.toXmls().sheet.children).toEqualJson([
-                {name: 'sheetPr', attributes: {}, children: []},
-                {name: 'sheetFormatPr', attributes: {}, children: []},
+                { name: 'sheetPr', attributes: {}, children: [] },
+                { name: 'sheetFormatPr', attributes: {}, children: [] },
                 {
                     name: 'cols',
                     attributes: {},
                     children: [
                         {
                             name: "col",
-                            attributes: {min: 1, max: 2, foo: true}
+                            attributes: { min: 1, max: 2, foo: true }
                         },
                         {
                             name: "col",
-                            attributes: {min: 3, max: 3, foo: true}
+                            attributes: { min: 3, max: 3, foo: true }
                         }
                     ]
                 },
-                {name: 'sheetData', attributes: {}, children: []},
-                {name: 'pageMargins', attributes: {}, children: []}
+                { name: 'sheetData', attributes: {}, children: [] },
+                { name: 'pageMargins', attributes: {}, children: [] }
             ]);
         });
 
@@ -791,15 +791,15 @@ describe("Sheet", () => {
             };
 
             expect(sheet.toXmls().sheet.children).toEqualJson([
-                {name: 'sheetPr', attributes: {}, children: []},
-                {name: 'sheetFormatPr', attributes: {}, children: []},
-                {name: 'sheetData', attributes: {}, children: []},
+                { name: 'sheetPr', attributes: {}, children: [] },
+                { name: 'sheetFormatPr', attributes: {}, children: [] },
+                { name: 'sheetData', attributes: {}, children: [] },
                 {
                     name: 'mergeCells',
                     attributes: {},
                     children: ["MERGE1", "MERGE2"]
                 },
-                {name: 'pageMargins', attributes: {}, children: []}
+                { name: 'pageMargins', attributes: {}, children: [] }
             ]);
         });
 
@@ -810,25 +810,25 @@ describe("Sheet", () => {
             };
 
             expect(sheet.toXmls().sheet.children).toEqualJson([
-                {name: 'sheetPr', attributes: {}, children: []},
-                {name: 'sheetFormatPr', attributes: {}, children: []},
-                {name: 'sheetData', attributes: {}, children: []},
+                { name: 'sheetPr', attributes: {}, children: [] },
+                { name: 'sheetFormatPr', attributes: {}, children: [] },
+                { name: 'sheetData', attributes: {}, children: [] },
                 {
                     name: 'hyperlinks',
                     attributes: {},
                     children: ["HYPERLINK1", "HYPERLINK2"]
                 },
-                {name: 'pageMargins', attributes: {}, children: []}
+                { name: 'pageMargins', attributes: {}, children: [] }
             ]);
         });
 
         it("should add the hyperlinks and merge cells in the proper order", () => {
-            sheet._mergeCells = {"A1:B2": "MERGE1"};
-            sheet._hyperlinks = {A1: "HYPERLINK1"};
+            sheet._mergeCells = { "A1:B2": "MERGE1" };
+            sheet._hyperlinks = { A1: "HYPERLINK1" };
             expect(sheet.toXmls().sheet.children).toEqualJson([
-                {name: 'sheetPr', attributes: {}, children: []},
-                {name: 'sheetFormatPr', attributes: {}, children: []},
-                {name: 'sheetData', attributes: {}, children: []},
+                { name: 'sheetPr', attributes: {}, children: [] },
+                { name: 'sheetFormatPr', attributes: {}, children: [] },
+                { name: 'sheetData', attributes: {}, children: [] },
                 {
                     name: 'mergeCells',
                     attributes: {},
@@ -839,7 +839,7 @@ describe("Sheet", () => {
                     attributes: {},
                     children: ["HYPERLINK1"]
                 },
-                {name: 'pageMargins', attributes: {}, children: []}
+                { name: 'pageMargins', attributes: {}, children: [] }
             ]);
         });
     });
@@ -862,7 +862,7 @@ describe("Sheet", () => {
 
     describe("_getOrCreateSheetViewNode", () => {
         it("should get the existing sheet view node", () => {
-            const sheetView = {name: "sheetView"};
+            const sheetView = { name: "sheetView" };
             sheetNode.children.push({
                 name: "sheetViews",
                 attributes: {},
@@ -899,7 +899,7 @@ describe("Sheet", () => {
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
-                    {name: "sheetData", attributes: {}, children: []}
+                    { name: "sheetData", attributes: {}, children: [] }
                 ]
             }, "RELATIONSHIPS");
 
@@ -911,14 +911,14 @@ describe("Sheet", () => {
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
-                    {name: "dimension", attributes: {}, children: []},
-                    {name: "sheetData", attributes: {}, children: []}
+                    { name: "dimension", attributes: {}, children: [] },
+                    { name: "sheetData", attributes: {}, children: [] }
                 ]
             });
 
             expect(sheet._node.children).toEqualJson([
-                {name: "sheetPr", attributes: {}, children: []},
-                {name: "sheetData", attributes: {}, children: []}
+                { name: "sheetPr", attributes: {}, children: [] },
+                { name: "sheetData", attributes: {}, children: [] }
             ]);
         });
 
@@ -955,31 +955,31 @@ describe("Sheet", () => {
                         name: 'cols',
                         attributes: {},
                         children: [
-                            {name: 'col', attributes: {min: 2, max: 3, foo: true}},
-                            {name: 'col', attributes: {min: 5, max: 5, bar: true}}
+                            { name: 'col', attributes: { min: 2, max: 3, foo: true } },
+                            { name: 'col', attributes: { min: 5, max: 5, bar: true } }
                         ]
                     },
-                    {name: "sheetData", attributes: {}, children: []}
+                    { name: "sheetData", attributes: {}, children: [] }
                 ]
             });
 
             expect(sheet._colNodes).toEqualJson([
                 undefined,
                 undefined,
-                {name: 'col', attributes: {min: 2, max: 3, foo: true}},
-                {name: 'col', attributes: {min: 2, max: 3, foo: true}},
+                { name: 'col', attributes: { min: 2, max: 3, foo: true } },
+                { name: 'col', attributes: { min: 2, max: 3, foo: true } },
                 undefined,
-                {name: 'col', attributes: {min: 5, max: 5, bar: true}}
+                { name: 'col', attributes: { min: 5, max: 5, bar: true } }
             ]);
         });
 
         it("should store the sheetPr node", () => {
-            const sheetPrNode = {name: 'sheetPr', attributes: {}, children: []};
+            const sheetPrNode = { name: 'sheetPr', attributes: {}, children: [] };
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
                     sheetPrNode,
-                    {name: "sheetData", attributes: {}, children: []}
+                    { name: "sheetData", attributes: {}, children: [] }
                 ]
             });
 
@@ -990,32 +990,32 @@ describe("Sheet", () => {
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
-                    {name: "sheetData", attributes: {}, children: []}
+                    { name: "sheetData", attributes: {}, children: [] }
                 ]
             });
 
-            expect(sheet._sheetPrNode).toEqualJson({name: 'sheetPr', attributes: {}, children: []});
+            expect(sheet._sheetPrNode).toEqualJson({ name: 'sheetPr', attributes: {}, children: [] });
         });
 
         it("should parse the merged cells", () => {
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
-                    {name: "sheetData", attributes: {}, children: []},
+                    { name: "sheetData", attributes: {}, children: [] },
                     {
                         name: 'mergeCells',
                         attributes: {},
                         children: [
-                            {name: 'mergeCell', attributes: {ref: "A1:B2", foo: true}},
-                            {name: 'mergeCell', attributes: {ref: "C3:D4", bar: true}}
+                            { name: 'mergeCell', attributes: { ref: "A1:B2", foo: true } },
+                            { name: 'mergeCell', attributes: { ref: "C3:D4", bar: true } }
                         ]
                     }
                 ]
             });
 
             expect(sheet._mergeCells).toEqualJson({
-                "A1:B2": {name: 'mergeCell', attributes: {ref: "A1:B2", foo: true}},
-                "C3:D4": {name: 'mergeCell', attributes: {ref: "C3:D4", bar: true}}
+                "A1:B2": { name: 'mergeCell', attributes: { ref: "A1:B2", foo: true } },
+                "C3:D4": { name: 'mergeCell', attributes: { ref: "C3:D4", bar: true } }
             });
         });
 
@@ -1023,21 +1023,21 @@ describe("Sheet", () => {
             sheet._init({}, {}, {
                 attributes: {},
                 children: [
-                    {name: "sheetData", attributes: {}, children: []},
+                    { name: "sheetData", attributes: {}, children: [] },
                     {
                         name: 'hyperlinks',
                         attributes: {},
                         children: [
-                            {name: 'hyperlink', attributes: {ref: "A1", foo: true}},
-                            {name: 'hyperlink', attributes: {ref: "C3", bar: true}}
+                            { name: 'hyperlink', attributes: { ref: "A1", foo: true } },
+                            { name: 'hyperlink', attributes: { ref: "C3", bar: true } }
                         ]
                     }
                 ]
             });
 
             expect(sheet._hyperlinks).toEqualJson({
-                A1: {name: 'hyperlink', attributes: {ref: "A1", foo: true}},
-                C3: {name: 'hyperlink', attributes: {ref: "C3", bar: true}}
+                A1: { name: 'hyperlink', attributes: { ref: "A1", foo: true } },
+                C3: { name: 'hyperlink', attributes: { ref: "C3", bar: true } }
             });
         });
     });
