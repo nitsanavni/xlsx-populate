@@ -355,11 +355,9 @@ describe("Sheet", () => {
         it("should return the sheet name", () => {
             expect(sheet.name()).toBe("SHEET NAME");
         });
-    });
 
-    describe("setName", () => {
         it("should set the sheet name", () => {
-            expect(sheet.setName("a new name")).toBe(sheet);
+            expect(sheet.name("a new name")).toBe(sheet);
             expect(sheet.name()).toBe("a new name");
         });
     });
